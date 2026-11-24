@@ -14,7 +14,8 @@ Aoife · 235 km
 
 One animal per day: 🐦 under 5 km · 🐇 5–10 · 🦊 10–15 · 🦌 15–21 · 🐆 21 km+ · ⬛ rest day.
 
-Live at **https://poreen.cianop101.workers.dev**
+Live at **https://poreen.cianop101.workers.dev**, and on the Porterstown Panthers website at `/poreen`
+(same database: the API allows cross-origin requests for that).
 
 ## How it's built
 

@@ -15,10 +15,19 @@ function serveStatic(url) {
   });
 }
 
+// The API is also used by the Porterstown Panthers website, so allow cross-origin calls.
+// No cookies are involved: posting needs the club code, deleting needs the run's own token.
+const CORS = {
+  "access-control-allow-origin": "*",
+  "access-control-allow-methods": "GET, POST, DELETE, OPTIONS",
+  "access-control-allow-headers": "content-type, x-run-token",
+  "access-control-max-age": "86400",
+};
+
 const json = (data, status = 200) =>
   new Response(JSON.stringify(data), {
     status,
-    headers: { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" },
+    headers: { "content-type": "application/json; charset=utf-8", "cache-control": "no-store", ...CORS },
   });
 
 const bad = (error, status = 400) => json({ error }, status);
@@ -121,6 +130,7 @@ export default {
   async fetch(req, env) {
     const url = new URL(req.url);
     if (!url.pathname.startsWith("/api/")) return serveStatic(url);
+    if (req.method === "OPTIONS") return new Response(null, { status: 204, headers: CORS });
 
     try {
       if (url.pathname === "/api/runs") {
