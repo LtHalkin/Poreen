@@ -5,10 +5,6 @@
   "compatibility_date": "2025-11-01",
   "workers_dev": true,
   "preview_urls": false,
-  "build": {
-    "command": "node scripts/bundle-static.mjs",
-    "watch_dir": "public"
-  },
   "d1_databases": [
     {
       "binding": "DB",
@@ -17,10 +13,19 @@
       "migrations_dir": "migrations"
     }
   ],
+  // Per-IP limits: writes (logging, editing, kudos) and anything using the committee code.
+  "ratelimits": [
+    { "name": "WRITE_LIMIT", "namespace_id": "4201", "simple": { "limit": 30, "period": 60 } },
+    { "name": "ADMIN_LIMIT", "namespace_id": "4202", "simple": { "limit": 20, "period": 60 } }
+  ],
   "vars": {
     "CLUB_NAME": "Panthers",
-    "CHALLENGE_START": "2026-11-24"
+    // Day #001. Runs dated before this are refused.
+    "CHALLENGE_START": "2026-11-24",
+    // Where people are sent if they open this Worker's own address.
+    "SITE_PAGE": "https://porterstown-panthers.pages.dev/poreen"
   }
-  // Secret (optional): CLUB_CODE — set with `npx wrangler secret put CLUB_CODE`.
-  // When set, runners must enter it to log a run.
+  // Secrets (set with `npx wrangler secret put NAME`):
+  //   CLUB_CODE   members enter it to log a run (optional; without it anyone can log)
+  //   CLUB_ADMIN  committee code: delete or edit any run, rename or merge runners
 }
