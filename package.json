@@ -1,0 +1,14 @@
+{
+  "name": "poreen",
+  "private": true,
+  "description": "The Panthers run around Ireland: log your km, see everyone on the map, climb the leaderboard.",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "db:migrate": "wrangler d1 migrations apply poreen --remote",
+    "db:migrate:local": "wrangler d1 migrations apply poreen --local"
+  },
+  "devDependencies": {
+    "wrangler": "^4.168.0"
+  }
+}

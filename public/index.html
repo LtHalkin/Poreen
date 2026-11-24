@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en-IE">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Poreen</title>
+  <meta name="description" content="The Panthers run the island. Log your km and watch everyone move around Ireland.">
+  <meta name="theme-color" content="#f4efe4" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#12120f" media="(prefers-color-scheme: dark)">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐆</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,700;1,9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top">
+    <div class="brand">
+      <h1>Poreen</h1>
+      <span class="num" id="dayNum">#001</span>
+    </div>
+    <p class="tag"><span id="clubName">Panthers</span> run the island &middot; <span id="loopKm"></span> km loop from Dublin</p>
+  </header>
+
+  <section class="club" aria-label="Club progress">
+    <div class="club-total">
+      <span class="label">Together</span>
+      <span class="big"><span id="clubKm">0</span><small>km</small></span>
+    </div>
+    <div class="club-where">
+      <p id="clubWhere">On the start line in Dublin</p>
+      <div class="bar" role="progressbar" aria-label="Progress on this lap" aria-valuemin="0" aria-valuemax="100" id="clubBar"><span></span></div>
+      <p class="sub" id="clubSub"></p>
+    </div>
+  </section>
+
+  <main class="grid">
+    <div class="mapcol">
+      <div id="map" aria-label="Map of the route around Ireland"></div>
+      <p class="mapnote" id="mapNote">Showing the whole club's combined trail. Tap a runner to follow them.</p>
+    </div>
+
+    <div class="side">
+      <section class="card log" aria-labelledby="logTitle">
+        <h2 id="logTitle">Log a run</h2>
+        <form id="logForm" autocomplete="off">
+          <label class="field">
+            <span>Your name</span>
+            <input id="fName" name="name" list="runnerList" maxlength="32" required placeholder="e.g. Aoife">
+            <datalist id="runnerList"></datalist>
+          </label>
+          <div class="row">
+            <label class="field">
+              <span>Distance (km)</span>
+              <input id="fKm" name="km" type="number" inputmode="decimal" min="0.1" max="250" step="0.01" required placeholder="8.4">
+            </label>
+            <label class="field">
+              <span>Date</span>
+              <input id="fDate" name="date" type="date" required>
+            </label>
+          </div>
+          <label class="field" id="codeField" hidden>
+            <span>Club code</span>
+            <input id="fCode" name="code" autocomplete="off" placeholder="Ask the committee">
+          </label>
+          <button type="submit" id="logBtn">Add my km</button>
+          <p class="msg" id="logMsg" role="status"></p>
+        </form>
+      </section>
+
+      <section class="card share" id="shareCard" hidden aria-labelledby="shareTitle">
+        <h2 id="shareTitle">Your Poreen</h2>
+        <pre id="shareText"></pre>
+        <div class="share-actions">
+          <button type="button" id="copyBtn">Copy</button>
+          <button type="button" class="ghost" id="nativeShareBtn" hidden>Share…</button>
+        </div>
+      </section>
+
+      <section class="card board" aria-labelledby="boardTitle">
+        <div class="board-head">
+          <h2 id="boardTitle">Leaderboard</h2>
+          <div class="tabs" role="tablist" aria-label="Leaderboard period">
+            <button role="tab" data-period="week">Week</button>
+            <button role="tab" data-period="month">Month</button>
+            <button role="tab" data-period="all">All time</button>
+          </div>
+        </div>
+        <ol id="board" class="board-list"></ol>
+      </section>
+
+      <section class="card feed" aria-labelledby="feedTitle">
+        <h2 id="feedTitle">Latest runs</h2>
+        <ul id="feed" class="feed-list"></ul>
+      </section>
+    </div>
+  </main>
+
+  <footer class="foot">
+    <p class="legend" id="legend"></p>
+    <p class="fine">Distances are straight lines between towns on the loop. Map &copy; OpenStreetMap contributors.</p>
+  </footer>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script type="module" src="app.js"></script>
+</body>
+</html>
